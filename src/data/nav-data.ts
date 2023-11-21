@@ -1,8 +1,8 @@
 export const nav_links = [
-  { name: 'Home', href: '/' },
-  { name: 'Gallery', href: '/gallery' },
-  { name: 'About', href: '/about' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Home', href: '/', wildcardPathname: false },
+  { name: 'Gallery', href: '/gallery', wildcardPathname: true },
+  { name: 'About', href: '/about', wildcardPathname: false },
+  { name: 'Contact', href: '/contact', wildcardPathname: false },
 ] as const;
 
 export const social_links = {

@@ -12,7 +12,7 @@ import { usePathname } from 'next/navigation';
 
 import FacebookIcon from '~/components/icons/FacebookIcon';
 import InstagramIcon from '~/components/icons/InstagramIcon';
-import NavLink from '~/components/ui/NavLink';
+import NavbarLink from '~/components/ui/NavbarLink';
 import { nav_links, social_links } from '~/data/nav-data';
 
 const Navbar = () => {
@@ -25,11 +25,14 @@ const Navbar = () => {
       </NavbarBrand>
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         {nav_links.map((link) => (
-          <NavbarItem key={link.name} isActive={pathname === link.href}>
-            <NavLink href={link.href} pathname={pathname}>
-              {link.name}
-            </NavLink>
-          </NavbarItem>
+          <NavbarLink
+            key={link.href}
+            href={link.href}
+            pathname={pathname}
+            wildcardPathname={link.wildcardPathname}
+          >
+            {link.name}
+          </NavbarLink>
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
