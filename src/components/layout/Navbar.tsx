@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  Button,
   Link,
   Navbar as NuiNavbar,
   NavbarBrand,
@@ -8,6 +9,7 @@ import {
   NavbarItem,
 } from '@nextui-org/react';
 
+import { signOut, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 
 import FacebookIcon from '~/components/icons/FacebookIcon';
@@ -17,6 +19,7 @@ import { nav_links, social_links } from '~/data/nav-data';
 
 const Navbar = () => {
   const pathname = usePathname();
+  const session = useSession();
 
   return (
     <NuiNavbar isBordered>
@@ -34,16 +37,26 @@ const Navbar = () => {
             {link.name}
           </NavbarLink>
         ))}
+        {session?.data?.user && (
+          <NavbarLink key={'/dashboard'} href={'/dashboard'} pathname={pathname} wildcardPathname>
+            Dashboard
+          </NavbarLink>
+        )}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
           <Link isExternal aria-label="Instagram" className="p-1" href={social_links.instagram}>
-            <InstagramIcon className="fill-default-500 h-[20px] w-[20px]" />
+            <InstagramIcon className="h-[20px] w-[20px] fill-default-500" />
           </Link>
           <Link isExternal aria-label="Instagram" className="p-1" href={social_links.facebook}>
-            <FacebookIcon className="fill-default-500 h-[20px] w-[20px]" />
+            <FacebookIcon className="h-[20px] w-[20px] fill-default-500" />
           </Link>
         </NavbarItem>
+        {session?.data?.user && (
+          <Button onClick={() => signOut({ callbackUrl: '/' })} size="sm" color="danger">
+            Sign out
+          </Button>
+        )}
       </NavbarContent>
     </NuiNavbar>
   );
