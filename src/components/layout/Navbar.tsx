@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <NuiNavbar isBordered>
       <NavbarBrand>
-        <p className="font-bold text-inherit">DuttoMedia</p>
+        <p className="text-large font-bold">DuttoMedia</p>
       </NavbarBrand>
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         {nav_links.map((link) => (
