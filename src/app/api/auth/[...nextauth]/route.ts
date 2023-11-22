@@ -1,3 +1,3 @@
-import { handlers } from '~/lib/nextauth';
+export { GET, POST } from '~/lib/nextauth';
 
-export const { GET, POST } = handlers;
+export const runtime = 'edge';
