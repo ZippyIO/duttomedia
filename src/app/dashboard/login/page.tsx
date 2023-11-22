@@ -8,7 +8,7 @@ const Page = () => {
   return (
     <main>
       <Button onClick={() => signOut({ callbackUrl: '/' })}>Sign out</Button>
-      <Button onClick={() => signIn('discord', { callbackUrl: '/dashboard' })}>Sign in</Button>
+      <Button onClick={() => signIn('github', { callbackUrl: '/dashboard' })}>Sign in</Button>
     </main>
   );
 };
