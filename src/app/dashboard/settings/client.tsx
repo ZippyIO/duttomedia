@@ -4,6 +4,7 @@ import { Button, Card, CardBody, CardHeader, Divider, Switch } from '@nextui-org
 import { type SiteSettings } from '@prisma/client';
 
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 import { type SiteSettingsPayload } from '~/lib/validators/SiteSettings';
 import { updateSiteSettings } from '~/server/site-settings';
@@ -20,7 +21,23 @@ const PageClient = ({ siteSettings }: Props) => {
   });
 
   async function onSubmit(data: SiteSettingsPayload) {
-    await updateSiteSettings(data);
+    const updateSettings = Promise.resolve(updateSiteSettings(data));
+
+    toast.promise(
+      updateSettings,
+      {
+        loading: 'Updating Settings...',
+        success: 'Updated Settings',
+        error: 'Failed to update settings',
+      },
+      {
+        style: {
+          borderRadius: '12px',
+          backgroundColor: '#18181b',
+          color: '#ECEDEE',
+        },
+      },
+    );
   }
 
   return (
