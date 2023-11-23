@@ -1,5 +1,7 @@
 'use server';
 
+import { type Category } from '@prisma/client';
+
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -28,4 +30,39 @@ export async function createCategory(data: CategoryPayload, redirectPath?: strin
         redirect(redirectPath);
       }
     });
+}
+
+export type CategorySelectOptions = Record<keyof Category, boolean> & { collections: boolean };
+export async function getCategories(
+  select: Partial<CategorySelectOptions> = {
+    id: true,
+    createdAt: false,
+    updatedAt: false,
+    name: true,
+    description: true,
+    collections: false,
+  },
+) {
+  const categories = await db.category.findMany({
+    select: {
+      id: select.id,
+      createdAt: select.createdAt,
+      updatedAt: select.updatedAt,
+      name: select.name,
+      description: select.description,
+      collections: select.collections
+        ? {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+              createdAt: true,
+              updatedAt: true,
+            },
+          }
+        : undefined,
+    },
+  });
+
+  return categories;
 }
