@@ -19,28 +19,46 @@ export const authConfig = {
   session: { strategy: 'jwt' },
   callbacks: {
     signIn: async ({ account }) => {
-      //? Check if user exists in database
-      //? if not return false to prevent sign in
-      const pId = account?.providerAccountId;
-      const id = z.string().min(1).safeParse(pId);
-      if (!id.success) {
+      try {
+        const [siteSettings, accountCount] = await Promise.all([
+          db.siteSettings.findUnique({ where: { id: 'settings' } }),
+          db.account.count(),
+        ]);
+
+        if (accountCount === 0) {
+          await db.siteSettings.upsert({
+            where: { id: 'settings' },
+            create: { allowNewUsers: false },
+            update: { allowNewUsers: false },
+          });
+          return true;
+        }
+
+        if (accountCount > 0 && !siteSettings?.allowNewUsers) {
+          const id = z
+            .string()
+            .min(1)
+            .safeParse(account?.providerAccountId);
+          if (!id.success) {
+            return false;
+          }
+
+          const isExistingUser = await db.account.findFirst({
+            where: { providerAccountId: id.data },
+          });
+
+          return Boolean(isExistingUser);
+        }
+
+        return true;
+      } catch (error) {
         return false;
       }
-
-      const isExistingUser = await db.account.findFirst({
-        where: { providerAccountId: id.data },
-      });
-
-      if (!isExistingUser) {
-        return false;
-      }
-
-      return true;
     },
     authorized: ({ request, auth }) => {
       if (!auth?.user) {
         const url = request.nextUrl.toString();
-        const pathname = '/dashboard/login';
+        const pathname = '/auth/login';
 
         return NextResponse.redirect(new URL(pathname, url));
       }

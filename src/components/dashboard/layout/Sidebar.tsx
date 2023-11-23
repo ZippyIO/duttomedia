@@ -15,6 +15,9 @@ const Sidebar = () => {
       <SidebarLink href="/dashboard/gallery" pathname={pathname} wildcardPathname>
         Gallery
       </SidebarLink>
+      <SidebarLink href="/dashboard/settings" pathname={pathname} wildcardPathname>
+        Settings
+      </SidebarLink>
     </div>
   );
 };
