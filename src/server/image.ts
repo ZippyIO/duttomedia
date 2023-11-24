@@ -40,8 +40,10 @@ export async function createImage(data: ImagePayload, redirectPath?: string) {
     })
     .then((res) => {
       revalidatePath('/dashboard');
+      revalidatePath('/gallery');
       if (res.collection) {
         revalidatePath(`/dashboard/images/collection/${createSlug(res.collection.name)}`);
+        revalidatePath(`/gallery/collection/${createSlug(res.collection.name)}`);
       }
 
       if (redirectPath) {

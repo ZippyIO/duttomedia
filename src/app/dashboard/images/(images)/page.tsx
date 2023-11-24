@@ -26,7 +26,7 @@ const Page = async () => {
 
   return (
     <main className="pt-2">
-      <div className="relative w-full columns-4 gap-4 [&>div:not(:first-child)]:mt-4">
+      <div className="relative w-full columns-1 gap-4 md:columns-2 lg:columns-3 2xl:columns-4 [&>div:not(:first-child)]:mt-4">
         {images.map((image) => (
           <Image
             key={image.id}
