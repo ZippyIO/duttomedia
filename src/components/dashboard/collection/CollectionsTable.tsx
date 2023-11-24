@@ -20,10 +20,10 @@ import {
 } from '@nextui-org/react';
 import { type Collection as PrismaCollection } from '@prisma/client';
 
+import { PlusIcon } from 'lucide-react';
 import { type ChangeEvent, type Key, useCallback, useMemo, useState } from 'react';
 
 import { ChevronDownIcon } from '~/components/icons/ChevronDownIcon';
-import { PlusIcon } from '~/components/icons/PlusIcon';
 import { SearchIcon } from '~/components/icons/SearchIcon';
 import { VerticalDotsIcon } from '~/components/icons/VerticalDotsIcon';
 import { capitalize } from '~/lib/utils';
@@ -197,7 +197,7 @@ const CollectionsTable = ({ collections }: CollectionsTableProps) => {
               href="/dashboard/collections/create"
               size="md"
               color="primary"
-              endContent={<PlusIcon />}
+              endContent={<PlusIcon size={22} strokeWidth={1.85} />}
             >
               Add New
             </Button>

@@ -24,7 +24,7 @@ export async function createCategory(data: CategoryPayload, redirectPath?: strin
       },
     })
     .then(() => {
-      revalidatePath('/dashboard/categories');
+      revalidatePath('/dashboard');
       if (redirectPath) {
         redirect(redirectPath);
       }

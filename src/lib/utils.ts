@@ -44,3 +44,14 @@ export function getFileId(str: string) {
   const fileId = split[split.length - 1];
   return fileId;
 }
+
+export function createSlug(str: string) {
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/(^_|_$)/g, '');
+}
+
+export function slugToString(slug: string) {
+  return slug.replace(/_/g, ' ');
+}
