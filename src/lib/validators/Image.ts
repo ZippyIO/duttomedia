@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const ImageValidator = z.object({
-  name: z.string().min(1, { message: 'Image name must be at least 1 character long.' }),
+  name: z.string().min(0, { message: 'Image name must be at least 0 character long.' }),
   description: z.string().optional(),
   alt: z.string().optional(),
   fileId: z.string().min(1, { message: 'File ID must be at least 1 character long.' }),

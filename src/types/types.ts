@@ -12,3 +12,11 @@ export type CollectionSelectOptions = Record<keyof Omit<Collection, 'categoryId'
   category: Partial<Omit<CategorySelectOptions, 'collections'>>;
   images: Partial<ImageSelectOptions>;
 };
+
+export type ImageFile = {
+  file?: File;
+  properties?: {
+    width: number;
+    height: number;
+  };
+};
