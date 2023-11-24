@@ -1,13 +1,12 @@
 'use server';
 
-import { type Category } from '@prisma/client';
-
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import db from '~/lib/db';
 import { auth } from '~/lib/nextauth';
 import { type CategoryPayload, CategoryValidator } from '~/lib/validators/Category';
+import { type CategorySelectOptions } from '~/types/types';
 
 export async function createCategory(data: CategoryPayload, redirectPath?: string) {
   const session = await auth();
@@ -32,7 +31,6 @@ export async function createCategory(data: CategoryPayload, redirectPath?: strin
     });
 }
 
-export type CategorySelectOptions = Record<keyof Category, boolean> & { collections: boolean };
 export async function getCategories(
   select: Partial<CategorySelectOptions> = {
     id: true,
