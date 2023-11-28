@@ -2,6 +2,7 @@
 
 import { Button, Link } from '@nextui-org/react';
 
+import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 
 import { createSlug } from '~/lib/utils';
@@ -17,13 +18,15 @@ const CollectionsNav = ({ collections }: CollectionsNavProps) => {
   const pathname = usePathname();
 
   return (
-    <div className="flex h-fit w-full items-center justify-center gap-2 rounded-medium bg-default-100 p-2">
+    <div className="flex h-fit w-full items-center justify-center gap-2 rounded-medium p-2">
       <Button
         as={Link}
         href="/gallery"
         size="sm"
         radius="md"
+        variant={pathname === '/gallery' ? 'shadow' : 'solid'}
         color={pathname === '/gallery' ? 'primary' : 'default'}
+        className={clsx([pathname !== '/gallery' && '!bg-default-100'])}
       >
         All
       </Button>
@@ -36,7 +39,9 @@ const CollectionsNav = ({ collections }: CollectionsNavProps) => {
             href={`/gallery/collection/${slug}`}
             size="sm"
             radius="md"
+            variant={pathname === `/gallery/collection/${slug}` ? 'shadow' : 'solid'}
             color={pathname === `/gallery/collection/${slug}` ? 'primary' : 'default'}
+            className={clsx([pathname !== `/gallery/collection/${slug}` && '!bg-default-100'])}
           >
             {collection.name}
           </Button>
