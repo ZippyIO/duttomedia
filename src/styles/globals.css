@@ -7,3 +7,33 @@
     @apply font-sans;
   }
 }
+
+@layer utilities {
+  /* .masonry::before,
+  .masonry::after {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: -0.25em;
+    margin-left: -0.25em;
+  } */
+  .masonry-sm {
+    column-gap: 16px;
+    column-count: 1;
+  }
+  .masonry-md {
+    column-gap: 16px;
+    column-count: 2;
+  }
+  .masonry-lg {
+    column-gap: 16px;
+    column-count: 3;
+  }
+  .masonry-xl {
+    column-gap: 16px;
+    column-count: 4;
+  }
+  .break-inside {
+    break-inside: avoid;
+  }
+}
