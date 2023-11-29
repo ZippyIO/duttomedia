@@ -1,17 +1,11 @@
 'use client';
 
-import {
-  Button,
-  Link,
-  Navbar as NuiNavbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from '@nextui-org/react';
+import { Button, Link, Navbar as NuiNavbar, NavbarContent, NavbarItem } from '@nextui-org/react';
 
 import { signOut, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 
+import DuttoMediaTextLogo from '~/components/icons/DuttoMediaTextLogo';
 import FacebookIcon from '~/components/icons/FacebookIcon';
 import InstagramIcon from '~/components/icons/InstagramIcon';
 import NavbarLink from '~/components/ui/NavbarLink';
@@ -23,9 +17,9 @@ const Navbar = () => {
 
   return (
     <NuiNavbar isBordered>
-      <NavbarBrand>
-        <p className="text-large font-bold">DuttoMedia</p>
-      </NavbarBrand>
+      <NavbarContent justify="start">
+        <DuttoMediaTextLogo className="h-[48px]" />
+      </NavbarContent>
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         {nav_links.map((link) => (
           <NavbarLink
@@ -53,7 +47,12 @@ const Navbar = () => {
           </Link>
         </NavbarItem>
         {session?.data?.user && (
-          <Button onClick={() => signOut({ callbackUrl: '/' })} size="sm" color="danger">
+          <Button
+            onClick={() => signOut({ callbackUrl: '/' })}
+            size="sm"
+            color="danger"
+            className="hidden sm:flex"
+          >
             Sign out
           </Button>
         )}
