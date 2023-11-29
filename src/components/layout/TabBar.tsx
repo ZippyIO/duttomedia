@@ -9,7 +9,7 @@ const TabBar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-0 z-20 flex w-full items-end justify-around border-t border-divider bg-background pt-1.5 sm:hidden">
+    <div className="fixed bottom-0 z-20 flex h-[62px] w-full items-end justify-around border-t border-divider bg-background sm:hidden">
       <TabBarItem href="/" pathname={pathname} icon={<AlbumIcon size={25} strokeWidth={1.5} />}>
         <span>Portfolio</span>
       </TabBarItem>

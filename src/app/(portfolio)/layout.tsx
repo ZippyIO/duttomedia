@@ -5,7 +5,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="relative h-full min-h-[100svh]">
       <Navbar />
-      {children}
+      <div className="pb-[62px] sm:pb-0">{children}</div>
       <TabBar />
     </div>
   );
