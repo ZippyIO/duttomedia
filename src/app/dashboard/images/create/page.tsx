@@ -1,7 +1,19 @@
 import { Card, CardBody } from '@nextui-org/react';
 
 import ImageForm from '~/components/dashboard/image/ImageForm';
+import Breadcrumbs, { type Breadcrumb } from '~/components/ui/Breadcrumbs';
 import { getCollections } from '~/server/collection';
+
+const breadcrunmbs = [
+  {
+    href: '/dashboard/images',
+    name: 'Images',
+  },
+  {
+    href: '/dashboard/images/create',
+    name: 'Create',
+  },
+] as Breadcrumb[];
 
 const Page = async () => {
   const collections = await getCollections({
@@ -15,7 +27,8 @@ const Page = async () => {
   });
 
   return (
-    <main className="flex justify-start p-2">
+    <main className="flex flex-col items-start gap-2 p-2">
+      <Breadcrumbs breadcrumbs={breadcrunmbs} size="lg" />
       <div className="w-full">
         <Card>
           <CardBody className="flex flex-col gap-2">
