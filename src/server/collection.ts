@@ -6,31 +6,69 @@ import { z } from 'zod';
 
 import db from '~/lib/db';
 import { auth } from '~/lib/nextauth';
-import { slugToString } from '~/lib/utils';
+import { createSlug, slugToString } from '~/lib/utils';
 import { type CollectionPayload, CollectionValidator } from '~/lib/validators/Collection';
+import { type ImagePayload, ImageValidator } from '~/lib/validators/Image';
 import { type CollectionSelectOptions } from '~/types/types';
 
-export async function createCollection(data: CollectionPayload, redirectPath?: string) {
+export async function createCollection(
+  collectionData: CollectionPayload,
+  imageData: ImagePayload,
+  redirectPath?: string,
+) {
   const session = await auth();
   if (!session) {
     throw new Error('Unauthorized');
   }
 
-  const { name, description, categoryId } = CollectionValidator.parse(data);
+  const parsedCollection = CollectionValidator.parse(collectionData);
+  const parsedImage = ImageValidator.parse(imageData);
 
-  await db.collection
-    .create({
-      data: {
-        name: name,
-        description: description,
-        categoryId: categoryId,
-      },
+  await db
+    .$transaction(async (tx) => {
+      const image = await tx.image.create({
+        data: {
+          name: parsedImage.name,
+          description: parsedImage.description,
+          alt: parsedImage.alt,
+          fileId: parsedImage.fileId,
+          url: parsedImage.url,
+          width: parsedImage.width,
+          height: parsedImage.height,
+          collectionId: parsedImage.collectionId,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      const collection = await tx.collection.create({
+        data: {
+          name: parsedCollection.name,
+          description: parsedCollection.description,
+          categoryId: parsedCollection.categoryId,
+        },
+        select: {
+          id: true,
+          name: true,
+        },
+      });
+
+      await tx.coverImage.create({
+        data: {
+          imageId: image.id,
+          collectionId: collection.id,
+        },
+      });
+
+      return collection.name;
     })
-    .then(() => {
-      revalidatePath('/dashboard');
-      if (redirectPath) {
-        redirect(redirectPath);
-      }
+    .then((res) => {
+      revalidatePath('/dashboard', 'layout');
+      revalidatePath('/gallery');
+      revalidatePath(`/gallery/collection/${createSlug(res)}`);
+
+      if (redirectPath) redirect(redirectPath);
     });
 }
 

@@ -20,17 +20,18 @@ const variants = {
 };
 
 export type SingleImageDropzoneProps = {
+  dropzoneOptions?: Omit<DropzoneOptions, 'disabled'>;
+  value?: File | string;
   width: string | number;
   height: string | number;
-  className?: string;
-  value?: File | string;
-  onChange?: (file?: ImageFile) => void | Promise<void>;
   disabled?: boolean;
-  dropzoneOptions?: Omit<DropzoneOptions, 'disabled'>;
+  className?: string;
+  imgClassName?: string;
+  onChange?: (file?: ImageFile) => void | Promise<void>;
 };
 
 const SingleImageDropzone = React.forwardRef<HTMLInputElement, SingleImageDropzoneProps>(
-  ({ dropzoneOptions, width, height, value, className, disabled, onChange }, ref) => {
+  ({ dropzoneOptions, value, width, height, disabled, className, imgClassName, onChange }, ref) => {
     const {
       getRootProps,
       getInputProps,
@@ -100,7 +101,7 @@ const SingleImageDropzone = React.forwardRef<HTMLInputElement, SingleImageDropzo
 
           {imageUrl ? (
             <img
-              className="h-full w-full rounded-md object-contain"
+              className={twMerge('object-contain" h-full w-full rounded-md', imgClassName)}
               src={imageUrl}
               alt={acceptedFiles[0]?.name}
             />

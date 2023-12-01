@@ -28,10 +28,10 @@ const Page = async () => {
   return (
     <main className="flex flex-col items-start gap-2 p-2">
       <Breadcrumbs breadcrumbs={breadcrunmbs} size="lg" />
-      <div className="w-full max-w-xs">
+      <div className="flex w-full flex-col items-center gap-2">
+        <h2 className="text-3xl font-semibold">New Collection</h2>
         <Card>
-          <CardBody className="flex flex-col gap-2">
-            <h2 className="text-xl font-semibold">Create Collection</h2>
+          <CardBody className="flex flex-col items-center gap-2">
             <CollectionForm
               categories={categories}
               redirectPath="/dashboard/collections"
