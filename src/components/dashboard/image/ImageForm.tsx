@@ -13,7 +13,7 @@ import { type Collection as PrismaCollection } from '@prisma/client';
 import { type FormHTMLAttributes, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import SingleImageDropzone from '~/components/dashboard/image/SingleImageDropzone';
 import useFileUpload from '~/hooks/use-file-upload';
@@ -29,12 +29,11 @@ export type ImageFormProps = FormHTMLAttributes<HTMLFormElement> & {
 };
 
 const FormSchema = ImageValidator.omit({
-  name: true,
   fileId: true,
   url: true,
   width: true,
   height: true,
-}).extend({ name: z.string().optional() });
+});
 type FormValues = z.infer<typeof FormSchema>;
 
 const ImageForm = ({ collections, redirectPath, ...props }: ImageFormProps) => {
@@ -81,7 +80,7 @@ const ImageForm = ({ collections, redirectPath, ...props }: ImageFormProps) => {
     }
 
     const payload: ImagePayload = {
-      name: data.name ?? '',
+      name: data.name,
       description: data.description,
       alt: data.alt,
       fileId: getFileId(uploadedFile.url),
